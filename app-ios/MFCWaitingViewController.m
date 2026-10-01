@@ -4,6 +4,8 @@
 //
 
 #import "MFCWaitingViewController.h"
+#import <sys/sysctl.h>
+#import <sys/types.h>
 
 // Bundle ID de Free Fire MAX
 static NSString *const kFFMaxBundleID = @"com.dts.freefiremax";

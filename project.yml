@@ -44,6 +44,12 @@ targets:
         GCC_PREPROCESSOR_DEFINITIONS:
           - "$(inherited)"
           - "H5GG_VERSION=7.9"
+        HEADER_SEARCH_PATHS:
+          - "$(inherited)"
+          - "$(SRCROOT)/engine/stubs"
+          - "$(SRCROOT)/engine/api"
+          - "$(SRCROOT)/engine/core"
+          - "$(SRCROOT)/ui-floating"
     dependencies:
       - sdk: UIKit.framework
       - sdk: Foundation.framework
