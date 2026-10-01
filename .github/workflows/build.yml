@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: macos-14
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -24,14 +24,67 @@ jobs:
           xcodebuild -version
           xcrun --sdk iphoneos --show-sdk-version
 
-      - name: List repo structure
+      - name: Install XcodeGen
+        run: |
+          brew install xcodegen
+
+      - name: Show repo structure
         run: |
           echo "=== Root ==="
           ls -la
+          echo ""
           echo "=== app-ios ==="
           ls -la app-ios/
+          echo ""
+          echo "=== engine ==="
+          ls -la engine/
+          echo ""
+          echo "=== license ==="
+          ls -la license/
+          echo ""
+          echo "=== ui-floating ==="
+          ls -la ui-floating/
 
-      - name: Placeholder (compilación próximamente)
+      - name: Generate Xcode project
         run: |
-          echo "✅ Workflow configurado correctamente"
-          echo "⏳ Aún falta añadir el proyecto Xcode"
+          xcodegen generate --spec project.yml
+
+      - name: List generated files
+        run: |
+          ls -la
+          ls -la MrFCrack.xcodeproj/ 2>/dev/null || echo "⚠️ No se generó el .xcodeproj"
+
+      - name: Build
+        continue-on-error: true
+        run: |
+          xcodebuild -project MrFCrack.xcodeproj \
+                     -scheme MrFCrack \
+                     -configuration Release \
+                     -sdk iphoneos \
+                     -derivedDataPath build \
+                     CODE_SIGN_IDENTITY="" \
+                     CODE_SIGNING_REQUIRED=NO \
+                     CODE_SIGNING_ALLOWED=NO \
+                     build 2>&1 | tee build.log
+
+      - name: Show build errors (if any)
+        if: always()
+        run: |
+          echo "=== Últimas 100 líneas del build ==="
+          tail -100 build.log || echo "No hay build.log"
+
+      - name: Package IPA (if build succeeded)
+        if: success()
+        run: |
+          mkdir -p Payload
+          cp -r build/Build/Products/Release-iphoneos/MrFCrack.app Payload/
+          zip -r MrFCrack.ipa Payload
+          echo "✅ IPA generado"
+          ls -lh MrFCrack.ipa
+
+      - name: Upload IPA
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: MrFCrack-ipa
+          path: MrFCrack.ipa

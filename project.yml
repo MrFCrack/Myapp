@@ -1,0 +1,61 @@
+name: MrFCrack
+options:
+  bundleIdPrefix: com.mrfcrack
+  deploymentTarget:
+    iOS: "14.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    PRODUCT_NAME: MrFCrack
+    PRODUCT_BUNDLE_IDENTIFIER: com.mrfcrack.app
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_IDENTITY: ""
+    CODE_SIGNING_REQUIRED: "NO"
+    CODE_SIGNING_ALLOWED: "NO"
+    CODE_SIGN_ENTITLEMENTS: app-ios/ent.plist
+    INFOPLIST_FILE: app-ios/Info.plist
+    CLANG_CXX_LANGUAGE_STANDARD: "c++17"
+    CLANG_CXX_LIBRARY: "libc++"
+    ENABLE_BITCODE: "NO"
+    SWIFT_VERSION: "5.0"
+    ARCHS: "arm64"
+    VALID_ARCHS: "arm64"
+    ONLY_ACTIVE_ARCH: "NO"
+
+targets:
+  MrFCrack:
+    type: application
+    platform: iOS
+    sources:
+      - path: app-ios
+        excludes:
+          - "generated"
+          - "h5ggapp.xcodeproj"
+          - "Assets.xcassets/AppIcon.appiconset/.gitkeep"
+          - "Assets.xcassets/AccentColor.colorset/.gitkeep"
+      - path: engine
+      - path: ui-floating
+      - path: license
+    settings:
+      base:
+        INFOPLIST_FILE: app-ios/Info.plist
+        CODE_SIGN_ENTITLEMENTS: app-ios/ent.plist
+        GCC_PREPROCESSOR_DEFINITIONS:
+          - "$(inherited)"
+          - "H5GG_VERSION=7.9"
+    dependencies:
+      - sdk: UIKit.framework
+      - sdk: Foundation.framework
+      - sdk: JavaScriptCore.framework
+      - sdk: WebKit.framework
+      - sdk: Security.framework
+      - sdk: AVFoundation.framework
+      - sdk: AudioToolbox.framework
+      - sdk: SystemConfiguration.framework
+      - sdk: CoreFoundation.framework
+      - sdk: CoreGraphics.framework
+      - sdk: CoreMedia.framework
+      - sdk: CoreVideo.framework
+      - sdk: libz.tbd
+      - sdk: libc++.tbd
