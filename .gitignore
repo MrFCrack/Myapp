@@ -1,0 +1,23 @@
+# Backups
+.backup_*/
+*.backup
+
+# Archivos de sistema
+.DS_Store
+*.swp
+*~
+
+# Builds y outputs
+build/
+packages/
+*.ipa
+*.deb
+*.tipa
+
+# Xcode
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Logs
+*.log
