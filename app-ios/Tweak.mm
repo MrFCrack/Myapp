@@ -41,7 +41,7 @@ bool g_commonapp_runmode = false;
 bool g_systemapp_runmode = false;
 bool g_standalone_runmode = false;
 
-#include "globalview/globalview.h"
+#include "globalview.h"
 
 GVData StaticGVSharedData = GVDataDefault;
 GVData* PGVSharedData = &StaticGVSharedData;
