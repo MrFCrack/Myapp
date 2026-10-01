@@ -15,7 +15,7 @@ settings:
     CODE_SIGNING_ALLOWED: "NO"
     CODE_SIGN_ENTITLEMENTS: app-ios/ent.plist
     INFOPLIST_FILE: app-ios/Info.plist
-    CLANG_CXX_LANGUAGE_STANDARD: "c++17"
+    CLANG_CXX_LANGUAGE_STANDARD: "c++14"
     CLANG_CXX_LIBRARY: "libc++"
     ENABLE_BITCODE: "NO"
     SWIFT_VERSION: "5.0"
